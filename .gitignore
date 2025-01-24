@@ -1,0 +1,62 @@
+# Directorios generados por Unity
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Mm]emoryCaptures/
+
+# Asset meta data (solo ignorar si el asset correspondiente también se ignora)
+!/[Aa]ssets/**/*.meta
+
+# Archivos de Visual Studio / MonoDevelop
+.vs/
+.vscode/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# Archivos generados por Unity3D
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+
+# Informes de errores de Unity3D
+sysinfo.txt
+
+# Builds
+*.apk
+*.aab
+*.unitypackage
+*.app
+
+# Crashlytics
+crashlytics-build.properties
+
+# Archivos del sistema operativo
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Carpeta de plugins de JetBrains Rider
+[Aa]ssets/Plugins/Editor/JetBrains*
+
+# Carpeta de caché de Gradle
+.gradle/
