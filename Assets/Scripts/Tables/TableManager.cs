@@ -11,13 +11,14 @@ public class TableManager : MonoBehaviour
     {
         public Transform tableTransform;
         public bool isOccupied = false;
-        public GameObject possibleSeats;
     }
 
     public Table[] tables;
+
     private void Awake()
     {
-        if(instance == null) {
+        if (instance == null)
+        {
             instance = this;
         }
         else
@@ -25,9 +26,10 @@ public class TableManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     void Start()
     {
-        
+
     }
 
     public Transform GetAvailableTable()
@@ -36,28 +38,40 @@ public class TableManager : MonoBehaviour
         {
             if (!table.isOccupied)
             {
-                table.isOccupied = true;
+                table.isOccupied = true; // Marcar la mesa como en proceso de ser ocupada
                 return table.tableTransform;
             }
-
         }
         return null;
-
     }
-    public void FreeTable(Transform tablePosition)
+
+    public void MarkTableAsTaken(Transform tableTransform)
     {
         foreach (Table table in tables)
         {
-            if (table.tableTransform == tablePosition)
+            if (table.tableTransform == tableTransform)
+            {
+                table.isOccupied = true;
+                return;
+            }
+        }
+    }
+
+    public void FreeTable(Transform tableTransform)
+    {
+        foreach (Table table in tables)
+        {
+            if (table.tableTransform == tableTransform)
             {
                 table.isOccupied = false;
                 break;
             }
         }
     }
+
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
