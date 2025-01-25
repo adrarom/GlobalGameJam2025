@@ -1,8 +1,9 @@
+
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BasketballThrow : MonoBehaviour
+public class coal : MonoBehaviour
 {
     // Referencias a objetos de la escena
 
@@ -11,10 +12,10 @@ public class BasketballThrow : MonoBehaviour
 
     float powerLevel;              // Nivel de poder calculado
 
-    public float min;              
-    public float max;              
+    public float min;
+    public float max;
 
-    private bool isChargingPower = false;  // Indica si se está cargando poder
+    public bool isChargingPower = false;  // Indica si se está cargando poder
 
     bool x = true;
     public bool start = false;
@@ -22,7 +23,7 @@ public class BasketballThrow : MonoBehaviour
 
 
     // Para mostrar el tiempo en la UI
-    public Text textoTemporizador;
+
 
 
 
@@ -32,30 +33,31 @@ public class BasketballThrow : MonoBehaviour
         panel.SetActive(false);
         powerLevel = 0;
         x = true;
-        
-      
+
+
 
     }
 
     private void Update()
     {
 
-        if (Input.GetKey(KeyCode.E) && x)
-        {
-            x = false;
-          start = true;
+        //if (Input.GetKey(KeyCode.Q) && x)
+        //{
+        //    x = false;
+        //    start = true;
 
-        }
+        //}
         // Inicia la carga de poder cuando se mantiene la barra espaciadora
         if (Input.GetKey(KeyCode.Space))
         {
-            if (!isChargingPower && start) // Evita reiniciar la corrutina varias veces
+            if (!isChargingPower) // Evita reiniciar la corrutina varias veces
             {
+                print("hola");
                 StopCoroutine("ChargePower");
 
                 StartCoroutine(Comprobar());
                 isChargingPower = true;
-               // StartCoroutine("ChargePower");
+                // StartCoroutine("ChargePower");
             }
         }
         else
@@ -63,7 +65,7 @@ public class BasketballThrow : MonoBehaviour
             if (isChargingPower)
             {
                 isChargingPower = false;
-           
+
 
             }
         }
@@ -72,10 +74,10 @@ public class BasketballThrow : MonoBehaviour
             start = false;
             panel.SetActive(true);
             StartCoroutine("ChargePower");
-            
+
         }
 
-       
+
 
 
     }
@@ -87,7 +89,7 @@ public class BasketballThrow : MonoBehaviour
 
     IEnumerator ChargePower()
     {
-       
+
 
         bool decreasingPower = false;
 
@@ -95,9 +97,9 @@ public class BasketballThrow : MonoBehaviour
         {
             yield return new WaitForSeconds(0.01f);
 
-            if (powerLevel >= 100) 
+            if (powerLevel >= 100)
             {
-                decreasingPower = true; 
+                decreasingPower = true;
             }
             if (powerLevel <= 0)
             {
@@ -115,26 +117,21 @@ public class BasketballThrow : MonoBehaviour
             powerSlider.value = powerLevel;
         }
     }
-    IEnumerator temppo()
-    {
-        yield return new WaitForSeconds(5f);
-        fin_bad();
-
-    }
+ 
     IEnumerator Comprobar()
     {
-        if(powerLevel<max && powerLevel > min)
+        if (powerLevel < max && powerLevel > min)
         {
             yield return new WaitForSeconds(1f);
 
             fin();
         }
-        else
-        {
-            yield return new WaitForSeconds(0.01f);
+        else{
+            StartCoroutine("ChargePower");
+            isChargingPower = false;
 
-            fin_bad();
         }
+
         yield return new WaitForSeconds(0.01f);
 
     }
@@ -145,7 +142,7 @@ public class BasketballThrow : MonoBehaviour
         panel.SetActive(false);
         powerLevel = 0;
         x = true;
-      
+        gameObject.GetComponent<cliente_pedido>().StartCoroutine("fumar");
 
 
     }
@@ -162,7 +159,7 @@ public class BasketballThrow : MonoBehaviour
 }
 
 
-  
+
 
 
 
