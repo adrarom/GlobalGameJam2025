@@ -7,10 +7,12 @@ public class TopDownMovement : MonoBehaviour
 {
     private Rigidbody rb;
     public float speed = 5f;
-    private float sprintingSpeed; 
+    private float sprintingSpeed;
     public float rotationSpeed = 10f;
     private Vector3 moveDirection;
-    public InputAction movement,sprint;
+    public InputAction movement, sprint;
+    public bool isCarryingItem = false;
+
     private void Awake()
     {
         rb = GetComponentInParent<Rigidbody>();
@@ -39,7 +41,6 @@ public class TopDownMovement : MonoBehaviour
 
     private void Move()
     {
-
         float actualSpeed = sprint.IsPressed() ? sprintingSpeed : speed;
 
         Vector2 input = movement.ReadValue<Vector2>();
@@ -54,6 +55,16 @@ public class TopDownMovement : MonoBehaviour
         }
     }
 
+    public Vector3 GetMoveDirection()
+    {
+        return moveDirection;
+    }
+
+    public bool IsCarryingItem()
+    {
+        return isCarryingItem;
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Client") && Keyboard.current.eKey.wasPressedThisFrame)
@@ -65,7 +76,8 @@ public class TopDownMovement : MonoBehaviour
 
     private void InteractWithStation(Collider station)
     {
-
         Debug.Log("Ejecutando lógica de interacción para: " + station.name);
+        // Aquí puedes agregar la lógica para recoger un objeto
+        isCarryingItem = true; // Ejemplo de cómo podrías cambiar el estado
     }
 }
