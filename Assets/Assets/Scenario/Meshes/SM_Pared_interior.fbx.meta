@@ -3,12 +3,7 @@ guid: 51410aecb5c637b4cb5b5967cb950a0f
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: MAT_Paredes
-    second: {fileID: 2100000, guid: d363bf4f8cb859f4fad82055a1ef03fb, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0

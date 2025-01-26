@@ -1,31 +1,27 @@
 
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class coal : MonoBehaviour
 {
     // Referencias a objetos de la escena
+    public List<Material> sabores = new List<Material>();
 
     public GameObject panel;
-    public Slider powerSlider;         // Barra de poder
-
-    float powerLevel;              // Nivel de poder calculado
+    public Slider powerSlider;
+    public GameObject hookahOnTable;
+    float powerLevel;
+    public int pedido;
 
     public float min;
     public float max;
 
-    public bool isChargingPower = false;  // Indica si se está cargando poder
+    public bool isChargingPower = false;
 
     bool x = true;
     public bool start = false;
-
-
-
-    // Para mostrar el tiempo en la UI
-
-
-
 
 
     private void Start()
@@ -40,13 +36,6 @@ public class coal : MonoBehaviour
 
     private void Update()
     {
-
-        //if (Input.GetKey(KeyCode.Q) && x)
-        //{
-        //    x = false;
-        //    start = true;
-
-        //}
         // Inicia la carga de poder cuando se mantiene la barra espaciadora
         if (Input.GetKey(KeyCode.Space))
         {
@@ -137,12 +126,17 @@ public class coal : MonoBehaviour
     }
     private void fin()
     {
-
-        print(":)");
-        panel.SetActive(false);
-        powerLevel = 0;
-        x = true;
-        gameObject.GetComponent<cliente_pedido>().StartCoroutine("fumar");
+        if(pedido == gameObject.GetComponent<cliente_pedido>().pedido)
+        {
+            print(":)");
+            panel.SetActive(false);
+            powerLevel = 0;
+            x = true;
+            gameObject.GetComponent<cliente_pedido>().StartCoroutine("fumar");
+            hookahOnTable.SetActive(true);
+            hookahOnTable.GetComponent<Renderer>().material = sabores[pedido];
+        }
+        
 
 
     }

@@ -33,11 +33,18 @@ public class flavors : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        start=true;
+        if (other.CompareTag("Player"))
+        {
+            start = true;
+
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        start = false;
+        if(other.CompareTag("Player"))
+        {
+            start = false;
+        }
     }
 }
