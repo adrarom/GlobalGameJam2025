@@ -28,7 +28,8 @@
 *.mdb
 *.opendb
 *.VC.db
-
+*.fbx
+*.fbx.meta
 # Archivos generados por Unity3D
 *.pidb.meta
 *.pdb.meta

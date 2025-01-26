@@ -7,6 +7,7 @@ public class surtidor : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject cachi;
+    [SerializeField]
     bool x;
     void Start()
     {
@@ -22,6 +23,7 @@ public class surtidor : MonoBehaviour
 
             cachi.SetActive(true);
             cachi.GetComponent<cachi>().act = true;
+            FindObjectOfType<TopDownMovement>().isCarryingItem = true;
 
 
 
@@ -29,12 +31,20 @@ public class surtidor : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        x = true;
+        if (other.CompareTag("Player"))
+        {
+            x = true;
+
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        x = false;
+        if (other.CompareTag("Player"))
+        {
+            x = false;
+
+        }
     }
 
 }

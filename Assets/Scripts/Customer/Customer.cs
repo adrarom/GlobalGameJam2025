@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Customer : MonoBehaviour
 {
@@ -10,14 +11,18 @@ public class Customer : MonoBehaviour
     private NavMeshObstacle obstacle;
     public string requestedFlavor;
     private Transform assignedTable;
+    public GameObject panel;
+    Collider collider;
 
     private void Start()
     {
+        collider = GetComponent<Collider>();
         agent = GetComponent<NavMeshAgent>();
         obstacle = GetComponent<NavMeshObstacle>();
         agent.speed = 3f;
         obstacle.enabled = false; // Deshabilitar el obstáculo al inicio
         Transform availableTableTransform = TableManager.instance.GetAvailableTable();
+        collider.enabled = false;
         if (availableTableTransform != null)
         {
             AssignTable(availableTableTransform);
@@ -35,7 +40,7 @@ public class Customer : MonoBehaviour
             if (Vector3.Distance(transform.position, assignedTable.position) < 2f)
             {
                 TakeSeat();
-                Debug.Log("Cliente se ha sentado.");
+                collider.enabled = true;
                 RequestFlavor();
             }
             else
@@ -58,8 +63,9 @@ public class Customer : MonoBehaviour
         if (agent.remainingDistance < 1f)
         {
             agent.enabled = false;
-            obstacle.enabled = true; // Habilitar el obstáculo cuando el cliente esté sentado
+            obstacle.enabled = true;
             gameObject.transform.position = table.position;
+            gameObject.transform.rotation = table.rotation;
         }
     }
 
@@ -71,8 +77,39 @@ public class Customer : MonoBehaviour
 
     private void RequestFlavor()
     {
-        requestedFlavor = GetRandomFlavor();
-        Debug.Log("Cliente pide sabor: " + requestedFlavor);
+        string tableFlavor = TableManager.instance.GetTableFlavorAssigned(assignedTable);
+        if (string.IsNullOrEmpty(tableFlavor))
+        {
+            requestedFlavor = GetRandomFlavor();
+            TableManager.instance.AssignFlavorToTable(assignedTable, requestedFlavor);
+        }
+        else
+        {
+            requestedFlavor = tableFlavor;
+        }
+        
+        panel.SetActive(true);
+
+        // Desactivar todos los sabores
+        foreach (Transform child in panel.transform)
+        {
+            child.gameObject.SetActive(false);
+        }
+
+        // Activar el sabor solicitado
+        switch (requestedFlavor)
+        {
+            case "Fresa":
+                panel.transform.Find("Fresa_Sabor").gameObject.SetActive(true);
+                break;
+            case "Platano":
+                panel.transform.Find("Platano_Sabor").gameObject.SetActive(true);
+                break;
+            case "Menta":
+                panel.transform.Find("Menta_Sabor").gameObject.SetActive(true);
+                break;
+        }
+
         state = CustomerState.Waiting;
     }
 
@@ -91,3 +128,4 @@ public class Customer : MonoBehaviour
         }
     }
 }
+
